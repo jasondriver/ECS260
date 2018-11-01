@@ -1,0 +1,11 @@
+-- SQL Query for Flaky Tests
+
+select t.row, s.tr_build_id 
+from test.travistorrent_27_10_2016 t inner join test.travistorrent_27_10_2016 s 
+on t.tr_prev_build = s.tr_build_id 
+where t.gh_src_churn=0 and t.gh_test_churn=0 and s.tr_tests_run!=0 and t.tr_tests_run=s.tr_tests_run and t.tr_tests_fail!=s.tr_tests_fail;
+
+
+--Job ID for Duplicate Entries in the SQL Table
+
+tr_job_id=69004725

@@ -1,0 +1,21 @@
+Queries executed to Find Duplicates and Discrepancies in Data:
+
+Cases where tr_tests_ran = 1 and (tr_tests_run=0 or null) and (tr_tests_skipped = 0 or null):
+select tr_tests_ok,tr_tests_fail,tr_tests_run,tr_tests_skipped,tr_failed_tests,tr_testduration,tr_tests_ran from test.travistorrent_27_10_2016 where ((tr_tests_run=0 or tr_tests_run is null) and (tr_tests_skipped=0 or tr_tests_skipped is null)) and tr_tests_ran=1;
+Answer. 127025
+
+Cases where tr_tests_ran = 1 and tr_tests_run=0 and tr_tests_skipped = 0 : (Giving the benefit of doubt that null is missing data and may have been correctly specified had the data been available.Hence removing null from the search.)
+select tr_tests_ok,tr_tests_fail,tr_tests_run,tr_tests_skipped,tr_failed_tests,tr_testduration,tr_tests_ran from test.travistorrent_27_10_2016 where tr_tests_run=0 and tr_tests_skipped=0 and tr_tests_ran=1;
+Answer. 39698
+
+Cases where tr_tests_ran = 1 and tr_tests_run=0 and tr_tests_skipped = 0 and tr_testduration = 0:
+select tr_tests_ok,tr_tests_fail,tr_tests_run,tr_tests_skipped,tr_failed_tests,tr_testduration,tr_tests_ran from test.travistorrent_27_10_2016 where tr_tests_run=0 and tr_tests_skipped=0 and tr_testduration=0 and tr_tests_ran=1;
+Answer. 15149
+
+Finding Entire Duplicate Rows: (On the basis of Build ID, Job ID and Git Commit)
+select tr_build_id, tr_job_id, git_commit, count(*) from test.travistorrent_27_10_2016 group by tr_build_id,tr_job_id,git_commit having count(*) > 1;
+Answer. 29621
+
+Finding Entire Duplicate Rows: (On the basis of Build ID, Job ID and Time the Build was Started at)
+select tr_build_id, tr_job_id, tr_started_at, count(*) from test.travistorrent_27_10_2016 group by tr_build_id,tr_job_id,tr_started_at having count(*) > 1;
+Answer. 29621

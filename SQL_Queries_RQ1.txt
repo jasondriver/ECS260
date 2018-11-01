@@ -1,0 +1,26 @@
+Queries related Research Question 1:
+(Results maybe inaccurate cause of duplicate entries and discrepancies in data.)
+
+No of Jobs that Run Tests but Skip Tests:
+select count(distinct(tr_job_id)) from test.travistorrent_27_10_2016 where tr_tests_run!=0 and tr_tests_skipped!=0;
+
+Answer. 308240
+
+No of Jobs that Run Tests but Don't Skip Tests:
+select count(distinct(tr_job_id)) from test.travistorrent_27_10_2016 where tr_tests_run!=0 and tr_tests_skipped=0;
+
+Answer. 611858
+
+No of Jobs that Don't Run Tests: (Probably should use tr_tests_ran instead of tr_tests_run. Don't know which to use cause of discrepancies.)
+select count(distinct(tr_job_id)) from test.travistorrent_27_10_2016 where tr_tests_run=0;
+
+Answer. 31260
+
+No of Jobs that Run Tests:(Probably should use tr_tests_ran instead of tr_tests_run. Don't know which to use cause of discrepancies.)
+select count(distinct(tr_job_id)) from test.travistorrent_27_10_2016 where tr_tests_run!=0;
+
+Answer. 920098
+
+Total Number of Jobs:
+select count(distinct(tr_job_id)) from test.travistorrent_27_10_2016;
+Answer. 1800390
